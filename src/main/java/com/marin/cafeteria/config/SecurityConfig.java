@@ -30,7 +30,7 @@ public class SecurityConfig {
                         // Public endpoints
                         .requestMatchers("/api/auth/**").permitAll()
                         // Server endpoints
-                        .requestMatchers("/api/tables/**").hasAnyAuthority("SERVER", "MANAGER")
+                        .requestMatchers("/api/products/**").hasAnyAuthority("SERVER", "MANAGER")
                         .requestMatchers("/api/order/**").hasAnyAuthority("SERVER", "MANAGER")
 
 
@@ -41,7 +41,9 @@ public class SecurityConfig {
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .cors(cors -> cors
+                        .configure(http));
         return http.build();
     }
 

@@ -1,6 +1,7 @@
 package com.marin.cafeteria.services;
 
 import com.itextpdf.text.DocumentException;
+import com.marin.cafeteria.config.jwt.JwtUtil;
 import com.marin.cafeteria.dto.request.OrderProductDTO;
 import com.marin.cafeteria.dto.request.OrderRequestDTO;
 import com.marin.cafeteria.dto.response.ApiResponse;
@@ -25,20 +26,23 @@ public class OrderService {
     private final ProductService productService;
     private final PDFSlipGenerator pdfSlipGenerator;
     private final ProductRepository productRepository;
+    private final EmployeeService employeeService;
+    private final JwtUtil jwtUtil;
 
-    public OrderService(EmployeeRepository employeeRepository, OrderRepository orderRepository, ProductService productService, PDFSlipGenerator pdfSlipGenerator, ProductRepository productRepository) {
+    public OrderService(EmployeeRepository employeeRepository, OrderRepository orderRepository, ProductService productService, PDFSlipGenerator pdfSlipGenerator, ProductRepository productRepository, EmployeeService employeeService, JwtUtil jwtUtil) {
         this.employeeRepository = employeeRepository;
         this.orderRepository = orderRepository;
         this.productService = productService;
         this.pdfSlipGenerator = pdfSlipGenerator;
         this.productRepository = productRepository;
+        this.employeeService = employeeService;
+        this.jwtUtil = jwtUtil;
     }
 
-    public ApiResponse createOrder(OrderRequestDTO orderRequestDTO) throws DocumentException {
+    public ApiResponse createOrder(String employeeToken, OrderRequestDTO orderRequestDTO) throws DocumentException {
 
         Order order = new Order();
-        Employee employee = employeeRepository.findById(orderRequestDTO.getServerId())
-                .orElseThrow(() -> new RuntimeException("Employee not found"));        order.setServer(employee);
+        Employee employee = employeeRepository.findByUsername(jwtUtil.validateToken(employeeToken));
         order.setServer(employee);
 
 

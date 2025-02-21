@@ -17,8 +17,6 @@ import java.util.List;
 @AllArgsConstructor
 public class OrderRequestDTO {
 
-    private int serverId;
-
     private List<OrderProductDTO> products;
     private Timestamp orderTime;
 

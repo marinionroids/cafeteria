@@ -2,6 +2,9 @@ package com.marin.cafeteria.services;
 
 import com.marin.cafeteria.model.OrderProduct;
 import com.marin.cafeteria.model.Product;
+import com.marin.cafeteria.model.ProductCategory;
+import com.marin.cafeteria.repository.OrderProductRepository;
+import com.marin.cafeteria.repository.ProductCategoryRepository;
 import com.marin.cafeteria.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +15,13 @@ import java.util.List;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final OrderProductRepository orderProductRepository;
+    private final ProductCategoryRepository productCategoryRepository;
 
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, OrderProductRepository orderProductRepository, ProductCategoryRepository productCategoryRepository) {
         this.productRepository = productRepository;
+        this.orderProductRepository = orderProductRepository;
+        this.productCategoryRepository = productCategoryRepository;
     }
 
     //Returns the total price of a list of products.
@@ -37,5 +44,10 @@ public class ProductService {
         }
 
         return total;
+    }
+
+
+    public List<ProductCategory> getOrderProducts() {
+        return productCategoryRepository.findAll();
     }
 }

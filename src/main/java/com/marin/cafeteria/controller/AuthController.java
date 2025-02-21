@@ -20,7 +20,7 @@ public class AuthController {
     }
 
 
-    @GetMapping("/auth")
+    @PostMapping("/auth")
     public ResponseEntity<?> authenticate(@RequestBody UserAuthDTO userAuthDTO){
 
         ApiResponse response = authService.login(userAuthDTO);

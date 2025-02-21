@@ -20,8 +20,8 @@ public class AuthService {
     }
 
     public ApiResponse login(UserAuthDTO userAuthDTO) {
-        Employee employee = employeeRepository.findByUsername(userAuthDTO.getUsername());
-        if (employee != null && employee.getPin() == userAuthDTO.getPin()) {
+        Employee employee = employeeRepository.findByPin((userAuthDTO.getPin()));
+        if (employee != null) {
             return new ApiResponse("LOGIN_SUCCESS", jwtUtil.generateToken(employee));
         }
 

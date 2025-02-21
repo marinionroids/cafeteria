@@ -9,6 +9,5 @@ import lombok.Setter;
 
 public class UserAuthDTO {
 
-    private String username;
     private int pin;
 }

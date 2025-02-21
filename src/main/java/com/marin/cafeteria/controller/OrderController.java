@@ -10,10 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Random;
 
@@ -30,10 +27,10 @@ public class OrderController {
     }
 
     @PostMapping("/order")
-    public ResponseEntity<?> newOrder(@RequestBody OrderRequestDTO orderRequestDTO) throws DocumentException {
+    public ResponseEntity<?> newOrder(@RequestHeader("Authorization") String token, @RequestBody OrderRequestDTO orderRequestDTO) throws DocumentException {
 
         try {
-            ApiResponse response = orderService.createOrder(orderRequestDTO);
+            ApiResponse response = orderService.createOrder(token, orderRequestDTO);
             Random random = new Random();
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_PDF);
