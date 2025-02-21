@@ -1,9 +1,9 @@
 package com.marin.cafeteria.controller;
 
 
-import com.marin.cafeteria.dto.request.UserRegistrationDTO;
+import com.marin.cafeteria.dto.request.EmployeeRegistrationDTO;
 import com.marin.cafeteria.dto.response.ApiResponse;
-import com.marin.cafeteria.services.UserService;
+import com.marin.cafeteria.services.EmployeeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,18 +13,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 
-public class UserController {
+public class EmployeeController {
 
-    private final UserService userService;
+    private final EmployeeService employeeService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
 
     @PostMapping("/register")
-    public ResponseEntity<?> createUser(@RequestBody UserRegistrationDTO userRegistrationDTO) {
-        ApiResponse response = userService.createUser(userRegistrationDTO);
+    public ResponseEntity<?> createUser(@RequestBody EmployeeRegistrationDTO employeeRegistrationDTO) {
+        ApiResponse response = employeeService.createUser(employeeRegistrationDTO);
         if (response.getStatus().equals("USER_CREATED")) {
             return ResponseEntity.ok(response);
         }

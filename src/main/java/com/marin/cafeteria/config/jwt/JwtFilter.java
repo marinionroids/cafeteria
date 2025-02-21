@@ -1,8 +1,8 @@
 package com.marin.cafeteria.config.jwt;
 
 
-import com.marin.cafeteria.model.User;
-import com.marin.cafeteria.repository.UserRepository;
+import com.marin.cafeteria.model.Employee;
+import com.marin.cafeteria.repository.EmployeeRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,11 +20,11 @@ import java.util.List;
 public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
-    private final UserRepository userRepository;
+    private final EmployeeRepository employeeRepository;
 
-    public JwtFilter(final JwtUtil jwtUtil, final UserRepository userRepository) {
+    public JwtFilter(final JwtUtil jwtUtil, final EmployeeRepository employeeRepository) {
         this.jwtUtil = jwtUtil;
-        this.userRepository = userRepository;
+        this.employeeRepository = employeeRepository;
     }
 
     @Override
@@ -42,12 +42,12 @@ public class JwtFilter extends OncePerRequestFilter {
                 String username = jwtUtil.validateToken(token);
 
                 if (username != null) {
-                    User user = userRepository.findByUsername(username);
+                    Employee employee = employeeRepository.findByUsername(username);
 
-                    if (user != null) {
+                    if (employee != null) {
                         UsernamePasswordAuthenticationToken auth =
-                                new UsernamePasswordAuthenticationToken(user, null,
-                                        List.of(new SimpleGrantedAuthority(user.getRole().toString())));
+                                new UsernamePasswordAuthenticationToken(employee, null,
+                                        List.of(new SimpleGrantedAuthority(employee.getRole().toString())));
 
                         SecurityContextHolder.getContext().setAuthentication(auth);
                     }

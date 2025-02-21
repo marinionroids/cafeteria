@@ -1,11 +1,10 @@
 package com.marin.cafeteria.config.jwt;
 
+import com.marin.cafeteria.model.Employee;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import com.marin.cafeteria.model.User;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -25,11 +24,11 @@ public class JwtUtil {
 
 
     // Generates a JWT token!
-    public String generateToken(User user) {
+    public String generateToken(Employee employee) {
 
         return Jwts.builder()
-                .setSubject(user.getUsername())
-                .claim("role", user.getRole())
+                .setSubject(employee.getUsername())
+                .claim("role", employee.getRole())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME ))
                 .signWith(key, SignatureAlgorithm.HS256)

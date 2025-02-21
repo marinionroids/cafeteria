@@ -30,10 +30,12 @@ public class SecurityConfig {
                         // Public endpoints
                         .requestMatchers("/api/auth/**").permitAll()
                         // Server endpoints
-                        .requestMatchers("/api/tables/**").hasAnyRole("SERVER", "MANAGER")
+                        .requestMatchers("/api/tables/**").hasAnyAuthority("SERVER", "MANAGER")
+                        .requestMatchers("/api/order/**").hasAnyAuthority("SERVER", "MANAGER")
+
 
                         // Manager endpoints
-                        .requestMatchers("/api/staff/**").hasRole("MANAGER")
+                        .requestMatchers("/api/staff/**").hasAuthority("MANAGER")
                         .requestMatchers("/api/register/**").hasAuthority("MANAGER")
                         .anyRequest().authenticated()
                 )
