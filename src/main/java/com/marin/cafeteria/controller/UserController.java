@@ -3,14 +3,16 @@ package com.marin.cafeteria.controller;
 
 import com.marin.cafeteria.dto.request.UserRegistrationDTO;
 import com.marin.cafeteria.dto.response.ApiResponse;
-import com.marin.cafeteria.model.User;
 import com.marin.cafeteria.services.UserService;
-import lombok.Getter;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
+
 public class UserController {
 
     private final UserService userService;
@@ -19,24 +21,14 @@ public class UserController {
         this.userService = userService;
     }
 
+
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserRegistrationDTO dto) {
-        ApiResponse response = userService.createUser(dto);
+    public ResponseEntity<?> createUser(@RequestBody UserRegistrationDTO userRegistrationDTO) {
+        ApiResponse response = userService.createUser(userRegistrationDTO);
         if (response.getStatus().equals("USER_CREATED")) {
-            return ResponseEntity
-                    .ok()
-                    .body(response);
+            return ResponseEntity.ok(response);
         }
 
-        // User exists
-        return ResponseEntity
-                .badRequest()
-                .body(response);
-
-    }
-
-    @GetMapping("/auth")
-    public ResponseEntity<?> authenticate(@RequestParam String username, @RequestParam int pin) {
-
+        return ResponseEntity.badRequest().body(response);
     }
 }

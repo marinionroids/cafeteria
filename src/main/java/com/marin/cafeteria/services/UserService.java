@@ -1,29 +1,22 @@
 package com.marin.cafeteria.services;
 
 
-import com.marin.cafeteria.dto.request.UserAuthDTO;
 import com.marin.cafeteria.dto.request.UserRegistrationDTO;
 import com.marin.cafeteria.dto.response.ApiResponse;
-import com.marin.cafeteria.dto.response.DuplicateUserException;
 import com.marin.cafeteria.dto.response.UserResponseDTO;
 import com.marin.cafeteria.model.User;
 import com.marin.cafeteria.repository.UserRepository;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public ApiResponse authUser(UserAuthDTO userAuthDTO) {
-
-
-    }
 
 
     public ApiResponse createUser(UserRegistrationDTO userRegistrationDTO) {
@@ -36,12 +29,13 @@ public class UserService {
             user.setPin(userRegistrationDTO.getPin());
             user.setRole(userRegistrationDTO.getRole());
             user.setActive(false);
-            userRepository.save(user);
-
             UserResponseDTO userResponseDTO = new UserResponseDTO();
             userResponseDTO.setUsername(user.getUsername());
             userResponseDTO.setRole(user.getRole());
             userResponseDTO.setActive(user.isActive());
+            userRepository.save(user);
+
+
             return new ApiResponse("USER_CREATED", userResponseDTO);
 
         }

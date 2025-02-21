@@ -1,4 +1,4 @@
-package com.marin.cafeteria.config;
+package com.marin.cafeteria.config.jwt;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +9,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class JwtConfig {
 
-    private String secret = "secret";
-    private Long expiration = 3600L;
+    private String secret = "0vwaZQMxY8qJubVDcASrxWSRkgVmAnWT";
+    private Long expiration = 36000L;
 }
