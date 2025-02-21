@@ -5,6 +5,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -13,13 +15,16 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private static final String SECRET = "0vwaZQMxY8qJubVDcASrxWSRkgVmAnWT";
+    @Value("${JWT_SECRET}")
+    private String SECRET;
     private static final long EXPIRATION_TIME = 86_400_000;
-    private final Key key = Keys.hmacShaKeyFor(SECRET.getBytes());
+    private Key key;
 
 
-
-
+    @PostConstruct
+    public void init() {
+        this.key = Keys.hmacShaKeyFor(SECRET.getBytes());
+    }
 
 
 
@@ -52,7 +57,7 @@ public class JwtUtil {
             if (claims.getExpiration().before(new Date())) {
                 return null;
             }
-            return claims.getSubject(); // returns walletAddress.
+            return claims.getSubject();
 
         } catch (Exception e) {
             return null;

@@ -33,7 +33,6 @@ public class OrderController {
     public ResponseEntity<?> newOrder(@RequestBody OrderRequestDTO orderRequestDTO) throws DocumentException {
 
         try {
-            System.out.println("here");
             ApiResponse response = orderService.createOrder(orderRequestDTO);
             Random random = new Random();
             HttpHeaders headers = new HttpHeaders();
