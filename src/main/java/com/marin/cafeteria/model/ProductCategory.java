@@ -23,8 +23,12 @@ public class ProductCategory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
     private int id;
-@JsonProperty("category")
+
+
+
+    @JsonProperty("category")
     private String name;
+
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     @JsonProperty("products")

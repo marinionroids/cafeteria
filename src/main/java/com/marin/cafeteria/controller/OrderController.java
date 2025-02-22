@@ -3,6 +3,7 @@ package com.marin.cafeteria.controller;
 
 import com.itextpdf.text.DocumentException;
 import com.marin.cafeteria.dto.request.OrderRequestDTO;
+import com.marin.cafeteria.dto.request.ReceiptRequestDTO;
 import com.marin.cafeteria.dto.response.ApiResponse;
 import com.marin.cafeteria.repository.OrderRepository;
 import com.marin.cafeteria.services.OrderService;
@@ -27,21 +28,41 @@ public class OrderController {
     }
 
     @PostMapping("/order")
-    public ResponseEntity<?> newOrder(@RequestHeader("Authorization") String token, @RequestBody OrderRequestDTO orderRequestDTO) throws DocumentException {
+    public ResponseEntity<?> newOrder(@RequestHeader("Authorization") String token, @RequestBody OrderRequestDTO orderRequestDTO) {
 
         try {
             ApiResponse response = orderService.createOrder(token, orderRequestDTO);
-            Random random = new Random();
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_PDF);
-            headers.setContentDispositionFormData("filename", "order-" + random.nextInt(10000) + ".pdf");
+
+            HttpHeaders headers = orderService.getRecieptHeader();
 
             return new ResponseEntity<>(response.getData(), headers, HttpStatus.OK);
         }catch (DocumentException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-
-
     }
+
+    @GetMapping("/past-orders")
+    public ResponseEntity<?> getPastOrders(@RequestHeader("Authorization") String token) {
+
+        ApiResponse response = orderService.getPastOrders(token);
+
+        return new ResponseEntity<>(response.getData(), HttpStatus.OK);
+    }
+
+    @PostMapping("/receipt")
+    public ResponseEntity<?> newReceipt(@RequestHeader("Authorization") String token, @RequestBody ReceiptRequestDTO receiptRequestDTO) throws DocumentException {
+        try {
+            ApiResponse response = orderService.getRecieptOrder(receiptRequestDTO);
+            HttpHeaders headers = orderService.getRecieptHeader();
+
+            return new ResponseEntity<>(response.getData(), headers, HttpStatus.OK);
+
+        }catch (DocumentException e) {
+
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+    }
+
 }

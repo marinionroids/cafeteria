@@ -17,12 +17,6 @@ import java.math.BigDecimal;
 public class PDFSlipGenerator {
 
 
-    private final ProductService productService;
-
-    public PDFSlipGenerator(ProductService productService) {
-        this.productService = productService;
-    }
-
     public byte[] generateOrderPDF(Order order) throws DocumentException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         Document document = new Document(PageSize.A5);
@@ -77,8 +71,7 @@ public class PDFSlipGenerator {
         document.add(new Paragraph("\n"));
 
         // Add total
-        Paragraph total = new Paragraph(String.join("Total: $%.2f", order.getTotalPrice().toString()),
-                new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD));
+        Paragraph total = new Paragraph(new Phrase(String.format("Total : $%.2f", order.getTotalPrice()), new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD)));
         total.setAlignment(Element.ALIGN_RIGHT);
         document.add(total);
 

@@ -32,6 +32,11 @@ public class SecurityConfig {
                         // Server endpoints
                         .requestMatchers("/api/products/**").hasAnyAuthority("SERVER", "MANAGER")
                         .requestMatchers("/api/order/**").hasAnyAuthority("SERVER", "MANAGER")
+                        .requestMatchers("/api/past-orders/**").hasAnyAuthority("SERVER", "MANAGER")
+                        .requestMatchers("/api/receipt/**").hasAnyAuthority("SERVER", "MANAGER")
+
+
+
 
 
                         // Manager endpoints
