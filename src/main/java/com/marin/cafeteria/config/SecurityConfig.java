@@ -34,7 +34,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/order/**").hasAnyAuthority("SERVER", "MANAGER")
                         .requestMatchers("/api/past-orders/**").hasAnyAuthority("SERVER", "MANAGER")
                         .requestMatchers("/api/receipt/**").hasAnyAuthority("SERVER", "MANAGER")
-
+                        .requestMatchers("/api/reports/**").hasAnyAuthority("SERVER", "MANAGER")
 
 
 

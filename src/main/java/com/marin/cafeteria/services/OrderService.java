@@ -14,13 +14,9 @@ import com.marin.cafeteria.repository.EmployeeRepository;
 import com.marin.cafeteria.repository.OrderRepository;
 import com.marin.cafeteria.repository.ProductRepository;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -32,25 +28,26 @@ public class OrderService {
     private final ProductService productService;
     private final PDFSlipGenerator pdfSlipGenerator;
     private final ProductRepository productRepository;
-    private final EmployeeService employeeService;
     private final JwtUtil jwtUtil;
 
-    public OrderService(EmployeeRepository employeeRepository, OrderRepository orderRepository, ProductService productService, PDFSlipGenerator pdfSlipGenerator, ProductRepository productRepository, EmployeeService employeeService, JwtUtil jwtUtil) {
+    public OrderService(EmployeeRepository employeeRepository, OrderRepository orderRepository, ProductService productService, PDFSlipGenerator pdfSlipGenerator, ProductRepository productRepository, JwtUtil jwtUtil) {
         this.employeeRepository = employeeRepository;
         this.orderRepository = orderRepository;
         this.productService = productService;
         this.pdfSlipGenerator = pdfSlipGenerator;
         this.productRepository = productRepository;
-        this.employeeService = employeeService;
         this.jwtUtil = jwtUtil;
     }
 
+    // /api/order
     public ApiResponse createOrder(String employeeToken, OrderRequestDTO orderRequestDTO) throws DocumentException {
 
         Order order = new Order();
-        Employee employee = employeeRepository.findByUsername(jwtUtil.validateToken(employeeToken));
-        order.setServer(employee);
+        Employee employee = employeeRepository
+                .findByUsername(jwtUtil.validateToken(employeeToken));
 
+
+        order.setServer(employee);
 
         List<OrderProduct> orderProducts = new ArrayList<>();
 
@@ -77,7 +74,6 @@ public class OrderService {
 
         return new ApiResponse("ORDER_CREATED", pdfBytes);
     }
-
     public ApiResponse getRecieptOrder(ReceiptRequestDTO receiptRequestDTO) throws DocumentException {
 
         Order order = orderRepository.findById(receiptRequestDTO.getOrderId())
@@ -91,18 +87,15 @@ public class OrderService {
 
 
 
+    // /api/past-orders
     public ApiResponse getPastOrders(String employeeToken){
 
-        Employee employee = employeeRepository.findByUsername(jwtUtil.validateToken(employeeToken));
-
+        Employee employee = employeeRepository
+                .findByUsername(jwtUtil.validateToken(employeeToken));
         List<Order> orders = orderRepository.findByServer(employee);
-
         return new ApiResponse("PAST_ORDERS", orders);
 
-
-
     }
-
     public HttpHeaders getRecieptHeader() {
         Random random = new Random();
         org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
@@ -112,6 +105,8 @@ public class OrderService {
         return headers;
 
     }
+
+
 
 }
 
