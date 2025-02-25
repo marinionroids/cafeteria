@@ -42,6 +42,7 @@ public class SecurityConfig {
                         // Manager endpoints
                         .requestMatchers("/api/staff/**").hasAuthority("MANAGER")
                         .requestMatchers("/api/register/**").hasAuthority("MANAGER")
+                        .requestMatchers("/api/admin/**").hasAuthority("MANAGER")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
