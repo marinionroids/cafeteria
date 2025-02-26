@@ -31,7 +31,7 @@ public class EmployeeController {
     }
 
 
-    @GetMapping("/admin/servers")
+    @GetMapping("/admin/staff")
     public ResponseEntity<?> getAllServers() {
         ApiResponse response = employeeService.getAllServers();
         return ResponseEntity.ok(response);

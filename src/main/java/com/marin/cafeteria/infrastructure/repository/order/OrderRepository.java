@@ -16,4 +16,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     Optional<Order> findById(int orderId);
 
     List<Order> findByOrderTimeBetweenAndServer(Timestamp orderTime, Timestamp orderTime2, Employee server);
+    List<Order> findByOrderTimeBetween(Timestamp orderTime, Timestamp orderTime2);
+
 }
