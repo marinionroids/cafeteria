@@ -1,5 +1,6 @@
 package com.marin.cafeteria.api.dto.response;
 
+
 import com.marin.cafeteria.core.model.order.Order;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,10 +14,10 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MetricsResponse {
+public class DailyServerBalance {
 
-    private BigDecimal total;
-    private int orderCount;
-    private List<Order> orders;
+    private int employeeId;
+    private BigDecimal totalDailyIncome;
+    private List<Order> dailyOrders;
 
 }
