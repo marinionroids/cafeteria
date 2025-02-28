@@ -1,5 +1,6 @@
 package com.marin.cafeteria.api.controller.metrics;
 
+import com.marin.cafeteria.api.dto.request.TimeDTO;
 import com.marin.cafeteria.api.dto.response.ApiResponse;
 import com.marin.cafeteria.core.services.metrics.MetricsService;
 import jakarta.validation.constraints.Max;
@@ -18,17 +19,15 @@ public class MetricsController {
     }
 
     @GetMapping("/metrics")
-    public ResponseEntity<?> getMetrics(@RequestHeader("Authorization") String token, @RequestParam("day") @Min(1) @Max(31) int day,@RequestParam("month")  @Min(1) @Max(12) int month,
-                                        @RequestParam("year") int year) {
+    public ResponseEntity<?> getMetrics(@RequestHeader("Authorization") String token, @ModelAttribute TimeDTO timeDTO) {
 
-        ApiResponse response = metricsService.getMetrics(day, month, year, token);
+        ApiResponse response = metricsService.getMetrics(timeDTO.getDay(), timeDTO.getMonth(), timeDTO.getYear(), token);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/admin/servers-balance")
-    public ResponseEntity<?> getServersBalance(@RequestParam("day") @Min(1) @Max(31) int day,@RequestParam("month")  @Min(1) @Max(12) int month,
-                                               @RequestParam("year") int year) {
-        ApiResponse response = metricsService.getAllServersBalance(day, month, year);
+    public ResponseEntity<?> getServersBalance(@ModelAttribute TimeDTO timeDTO) {
+        ApiResponse response = metricsService.getAllServersBalance(timeDTO.getDay(), timeDTO.getMonth(), timeDTO.getYear());
         return ResponseEntity.ok(response);
     }
 }

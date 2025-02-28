@@ -4,6 +4,7 @@ package com.marin.cafeteria.api.controller.order;
 import com.itextpdf.text.DocumentException;
 import com.marin.cafeteria.api.dto.request.OrderRequestDTO;
 import com.marin.cafeteria.api.dto.request.ReceiptRequestDTO;
+import com.marin.cafeteria.api.dto.request.TimeDTO;
 import com.marin.cafeteria.api.dto.response.ApiResponse;
 import com.marin.cafeteria.infrastructure.repository.order.OrderRepository;
 import com.marin.cafeteria.core.services.order.OrderService;
@@ -60,6 +61,13 @@ public class OrderController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
         }
+    }
+
+    @GetMapping("/admin/orders")
+    public ResponseEntity<?> getAdminOrders(@ModelAttribute TimeDTO timeDTO) {
+
+        ApiResponse response = orderService.getAdminOrders(timeDTO);
+        return new ResponseEntity<>(response.getData(), HttpStatus.OK);
     }
 
 }

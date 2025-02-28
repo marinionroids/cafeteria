@@ -1,6 +1,8 @@
 package com.marin.cafeteria.core.services.order;
 
 import com.itextpdf.text.DocumentException;
+import com.marin.cafeteria.api.dto.request.TimeDTO;
+import com.marin.cafeteria.api.dto.response.AdminOrdersResponse;
 import com.marin.cafeteria.infrastructure.config.jwt.JwtUtil;
 import com.marin.cafeteria.api.dto.request.OrderProductDTO;
 import com.marin.cafeteria.api.dto.request.OrderRequestDTO;
@@ -17,6 +19,9 @@ import com.marin.cafeteria.infrastructure.repository.product.ProductRepository;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -75,6 +80,7 @@ public class OrderService {
 
         return new ApiResponse("ORDER_CREATED", pdfBytes);
     }
+
     public ApiResponse getRecieptOrder(ReceiptRequestDTO receiptRequestDTO) throws DocumentException {
 
         Order order = orderRepository.findById(receiptRequestDTO.getOrderId())
@@ -96,6 +102,22 @@ public class OrderService {
         List<Order> orders = orderRepository.findByServer(employee);
         return new ApiResponse("PAST_ORDERS", orders);
 
+    }
+
+    public ApiResponse getAdminOrders(TimeDTO timeDTO){
+        LocalDateTime startDate = LocalDateTime.of(timeDTO.getYear(), timeDTO.getMonth(), timeDTO.getDay(), 0 , 0);
+        LocalDateTime endDate = startDate.plusDays(1);
+        List<Order> orders = orderRepository.findByOrderTimeBetween(Timestamp.valueOf(startDate), Timestamp.valueOf(endDate));
+        List<AdminOrdersResponse> adminOrdersResponses = new ArrayList<>();
+        for (Order order : orders) {
+            AdminOrdersResponse adminOrdersResponse = new AdminOrdersResponse();
+            adminOrdersResponse.setOrder(order);
+            adminOrdersResponse.setEmployeeName(order.getServer().getUsername());
+            adminOrdersResponse.setEmployeeId(order.getServer().getId());
+            adminOrdersResponses.add(adminOrdersResponse);
+        }
+
+        return new ApiResponse("ADMIN_ORDERS", adminOrdersResponses);
     }
     public HttpHeaders getRecieptHeader() {
         Random random = new Random();
