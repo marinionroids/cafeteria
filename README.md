@@ -3,14 +3,14 @@ Cafeteria Management Web App with Rest API, MYSQL and SpringBoot Back End.
 
 
 /// SERVER PANEL
-
-/api
-	/auth    --   authenticates with pin.    
-	/products   -- returns a list of all the category-products
-	/order	-- creates a new order
-	/past-orders	-- list of server's past orders
-	/receipt -- generates a receipt and prompts a print window
-	/metrics -- returns balance of server for specific day
+	
+	/api
+		/auth    --   authenticates with pin.    
+		/products   -- returns a list of all the category-products
+		/order	-- creates a new order
+		/past-orders	-- list of server's past orders
+		/receipt -- generates a receipt and prompts a print window
+		/metrics -- returns balance of server for specific day
 
  ![image](https://github.com/user-attachments/assets/0da211ff-787c-4fa9-9d08-57ce7a5a6432)
 
@@ -19,7 +19,8 @@ Cafeteria Management Web App with Rest API, MYSQL and SpringBoot Back End.
 /// ADMIN PANEL 
 
 
-/api/register  -- creates a new staff member.
+	/api/register  -- creates a new staff member.
+	
 
 /api/admin
 
