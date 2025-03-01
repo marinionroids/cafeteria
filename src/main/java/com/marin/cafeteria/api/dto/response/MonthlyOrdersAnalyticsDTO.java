@@ -13,9 +13,9 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class MonthlyOrdersAnalyticsDTO {
 
-    private BigDecimal totalIncome;
-    private int totalOrders;
-    private BigDecimal averageOrderPrice;
+    private BigDecimal totalIncome = BigDecimal.ZERO;
+    private int totalOrders = 0;
+    private BigDecimal averageOrderPrice = BigDecimal.ZERO;
 
 
 }

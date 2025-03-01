@@ -63,7 +63,7 @@ public class MonthlyAnalyticsService {
                 .findByOrderTimeBetweenAndServer(Timestamp.valueOf(firstOfMonth), Timestamp.valueOf(firstOfMonth.plusMonths(1)), employee);
 
         if (monthlyOrders.isEmpty()) {
-            return null;
+            return new MonthlyOrdersAnalyticsDTO(BigDecimal.ZERO, 0, BigDecimal.ZERO);
         }
 
         return calculateOrderAnalytics(monthlyOrders);

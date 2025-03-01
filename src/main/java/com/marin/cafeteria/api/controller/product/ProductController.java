@@ -50,6 +50,12 @@ public class ProductController {
 
     }
 
+    @GetMapping("/admin/category")
+    public ResponseEntity<?> getAllCategory() {
+        ApiResponse apiResponse = productService.getAllCategories();
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
+
     @PostMapping("/admin/category")
     public ResponseEntity<?> addCategory(@RequestBody AdminCategoryDTO dto) {
 

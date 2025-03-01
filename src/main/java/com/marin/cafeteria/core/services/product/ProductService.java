@@ -3,6 +3,7 @@ package com.marin.cafeteria.core.services.product;
 import com.marin.cafeteria.api.dto.request.AdminCategoryDTO;
 import com.marin.cafeteria.api.dto.request.AdminProductDTO;
 import com.marin.cafeteria.api.dto.response.ApiResponse;
+import com.marin.cafeteria.api.dto.response.CategoryResponseDTO;
 import com.marin.cafeteria.core.model.order.OrderProduct;
 import com.marin.cafeteria.core.model.product.Product;
 import com.marin.cafeteria.core.model.product.ProductCategory;
@@ -11,6 +12,7 @@ import com.marin.cafeteria.infrastructure.repository.product.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,6 +24,17 @@ public class ProductService {
     public ProductService(ProductRepository productRepository, ProductCategoryRepository productCategoryRepository) {
         this.productRepository = productRepository;
         this.productCategoryRepository = productCategoryRepository;
+    }
+
+    public ApiResponse getAllCategories() {
+        List<ProductCategory> categories = productCategoryRepository.findAll();
+        List<CategoryResponseDTO> categoryDTOs = new ArrayList<>();
+        for (ProductCategory category : categories) {
+            CategoryResponseDTO categoryDTO = new CategoryResponseDTO(category.getId(), category.getName());
+            categoryDTOs.add(categoryDTO);
+
+        }
+        return new ApiResponse("Categories", categoryDTOs);
     }
 
     //Returns the total price of a list of products.

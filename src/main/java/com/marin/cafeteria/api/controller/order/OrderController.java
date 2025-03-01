@@ -49,7 +49,7 @@ public class OrderController {
     }
 
     @PostMapping("/receipt")
-    public ResponseEntity<?> newReceipt(@RequestHeader("Authorization") String token, @RequestBody ReceiptRequestDTO receiptRequestDTO) throws DocumentException {
+    public ResponseEntity<?> newReceipt(@RequestBody ReceiptRequestDTO receiptRequestDTO) throws DocumentException {
         try {
             ApiResponse response = orderService.getRecieptOrder(receiptRequestDTO);
             HttpHeaders headers = orderService.getRecieptHeader();

@@ -110,10 +110,7 @@ public class OrderService {
         List<Order> orders = orderRepository.findByOrderTimeBetween(Timestamp.valueOf(startDate), Timestamp.valueOf(endDate));
         List<AdminOrdersResponse> adminOrdersResponses = new ArrayList<>();
         for (Order order : orders) {
-            AdminOrdersResponse adminOrdersResponse = new AdminOrdersResponse();
-            adminOrdersResponse.setOrder(order);
-            adminOrdersResponse.setEmployeeName(order.getServer().getUsername());
-            adminOrdersResponse.setEmployeeId(order.getServer().getId());
+            AdminOrdersResponse adminOrdersResponse = new AdminOrdersResponse(order.getServer().getId(), order.getServer().getUsername(), order);
             adminOrdersResponses.add(adminOrdersResponse);
         }
 
