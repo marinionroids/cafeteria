@@ -2,6 +2,7 @@ package com.marin.cafeteria.api.controller.product;
 
 
 import com.marin.cafeteria.api.dto.request.AdminCategoryDTO;
+import com.marin.cafeteria.api.dto.request.AdminProductCreateDTO;
 import com.marin.cafeteria.api.dto.request.AdminProductDTO;
 import com.marin.cafeteria.api.dto.response.ApiResponse;
 import com.marin.cafeteria.core.model.product.ProductCategory;
@@ -41,7 +42,7 @@ public class ProductController {
     }
 
     @PostMapping("/admin/product")
-    public ResponseEntity<?> addProduct(@RequestBody AdminProductDTO dto) {
+    public ResponseEntity<?> addProduct(@RequestBody AdminProductCreateDTO dto) {
         ApiResponse response = productService.createProduct(dto);
         if (response.getStatus().equals("FAILED")) {
             return new ResponseEntity<>(response, HttpStatus.NOT_ACCEPTABLE);

@@ -1,6 +1,7 @@
 package com.marin.cafeteria.core.services.product;
 
 import com.marin.cafeteria.api.dto.request.AdminCategoryDTO;
+import com.marin.cafeteria.api.dto.request.AdminProductCreateDTO;
 import com.marin.cafeteria.api.dto.request.AdminProductDTO;
 import com.marin.cafeteria.api.dto.response.ApiResponse;
 import com.marin.cafeteria.api.dto.response.CategoryResponseDTO;
@@ -88,7 +89,7 @@ public class ProductService {
 
     }
 
-    public ApiResponse createProduct(AdminProductDTO dto) {
+    public ApiResponse createProduct(AdminProductCreateDTO dto) {
         Product product = new Product();
 
         if (dto.getName() == null || dto.getCategoryName().isEmpty() || dto.getPrice().compareTo(BigDecimal.ZERO) == 0)  {
